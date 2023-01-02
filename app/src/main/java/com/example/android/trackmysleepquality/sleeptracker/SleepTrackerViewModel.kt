@@ -23,12 +23,21 @@ class SleepTrackerViewModel(
 
     val  nights = database.getAllNights()
 
+    /**
+     * If tonight has not been set, then the START button should be visible.
+     */
     val startButtonVisible = Transformations.map(tonight) {
         null == it
     }
+    /**
+     * If tonight has been set, then the STOP button should be visible.
+     */
     val stopButtonVisible = Transformations.map(tonight) {
         null != it
     }
+    /**
+     * Show the clear button if the list is not empty.
+     */
     val clearButtonVisible = Transformations.map(nights) {
         it?.isNotEmpty()
     }
