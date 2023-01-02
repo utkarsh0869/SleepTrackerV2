@@ -21,7 +21,7 @@ class SleepTrackerViewModel(
     //ViewModel needs access to the database through the interface defined in the DAO
     private val tonight = MutableLiveData<SleepNight?>()
 
-    private var nights = database.getAllNights()
+    val  nights = database.getAllNights()
 
     val startButtonVisible = Transformations.map(tonight) {
         null == it
