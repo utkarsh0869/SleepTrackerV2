@@ -56,7 +56,7 @@ class SleepTrackerFragment : Fragment() {
         //an observer that sets the adapter when there is new data
         sleepTrackerViewModel.nights.observe(viewLifecycleOwner, Observer {
             it?.let{
-                adapter.data = it
+                adapter.submitList(it)
             }
         })
 
