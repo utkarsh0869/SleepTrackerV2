@@ -46,6 +46,8 @@ class SleepQualityFragment : Fragment() {
 
         binding.sleepQualityViewModel = sleepQualityViewModel
 
+        binding.lifecycleOwner = this
+
         sleepQualityViewModel.navigateToSleepTracker.observe(viewLifecycleOwner,  Observer {
             if (it == true) { // Observed state is true.
                 this.findNavController().navigate(

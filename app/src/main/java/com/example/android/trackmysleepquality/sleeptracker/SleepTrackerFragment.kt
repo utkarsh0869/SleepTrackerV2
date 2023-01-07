@@ -1,9 +1,10 @@
-  package com.example.android.trackmysleepquality.sleeptracker
+package com.example.android.trackmysleepquality.sleeptracker
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -15,7 +16,7 @@ import com.example.android.trackmysleepquality.database.SleepDatabase
 import com.example.android.trackmysleepquality.databinding.FragmentSleepTrackerBinding
 import com.google.android.material.snackbar.Snackbar
 
-  /**
+/**
  * A fragment with buttons to record start and end times for sleep, which are saved in
  * a database. Cumulative data is displayed in a simple scrollable TextView.
  */
@@ -54,12 +55,26 @@ class SleepTrackerFragment : Fragment() {
         val manager = GridLayoutManager(activity, 3)
         binding.sleepList.layoutManager = manager
 
-        val adapter = SleepNightAdapter()
+        val adapter = SleepNightAdapter(SleepNightAdapter.SleepNightListener { nightId ->
+            sleepTrackerViewModel.onSleepNightClicked(nightId)
+        })
         binding.sleepList.adapter = adapter //attaching the adapter to the RV to populate items
+
+        sleepTrackerViewModel.navigateToSleepDataQuality.observe(viewLifecycleOwner, Observer { night ->
+            Toast.makeText(context, "$night", Toast.LENGTH_LONG).show()
+            night?.let {
+//                Toast.makeText(context, "$night", Toast.LENGTH_LONG).show()
+                this.findNavController().navigate(
+                        SleepTrackerFragmentDirections
+                                .actionSleepTrackerFragmentToSleepDetailFragment(night)
+                )
+                sleepTrackerViewModel.onSleepDataQualityNavigated()
+            }
+        })
 
         //an observer that sets the adapter when there is new data
         sleepTrackerViewModel.nights.observe(viewLifecycleOwner, Observer {
-            it?.let{
+            it?.let {
                 adapter.submitList(it)
             }
         })
@@ -67,10 +82,9 @@ class SleepTrackerFragment : Fragment() {
         binding.lifecycleOwner = this
 
         sleepTrackerViewModel.navigateToSleepQuality.observe(viewLifecycleOwner, Observer { night ->
-            night?.let{
+            night?.let {
                 this.findNavController().navigate(
-                        SleepTrackerFragmentDirections.
-                                actionSleepTrackerFragmentToSleepQualityFragment(night.nightId)
+                        SleepTrackerFragmentDirections.actionSleepTrackerFragmentToSleepQualityFragment(night.nightId)
                 )
                 sleepTrackerViewModel.doneNavigating()
             }

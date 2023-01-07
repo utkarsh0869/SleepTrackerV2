@@ -21,7 +21,7 @@ class SleepTrackerViewModel(
     //ViewModel needs access to the database through the interface defined in the DAO
     private val tonight = MutableLiveData<SleepNight?>()
 
-    val  nights = database.getAllNights()
+    val nights = database.getAllNights()
 
     /**
      * If tonight has not been set, then the START button should be visible.
@@ -29,12 +29,14 @@ class SleepTrackerViewModel(
     val startButtonVisible = Transformations.map(tonight) {
         null == it
     }
+
     /**
      * If tonight has been set, then the STOP button should be visible.
      */
     val stopButtonVisible = Transformations.map(tonight) {
         null != it
     }
+
     /**
      * Show the clear button if the list is not empty.
      */
@@ -50,7 +52,7 @@ class SleepTrackerViewModel(
         _showSnackbarEvent.value = false
     }
 
-    val nightString = Transformations.map(nights){ nights ->
+    val nightString = Transformations.map(nights) { nights ->
         formatNights(nights, application.resources)
     }
 
@@ -71,6 +73,7 @@ class SleepTrackerViewModel(
             tonight.value = getTonightFromDatabase()
         }
     }
+
     /**
      *  Handling the case of the stopped app or forgotten recording,
      *  the start and end times will be the same.j
@@ -79,14 +82,14 @@ class SleepTrackerViewModel(
      *  recording.
      */
     private suspend fun getTonightFromDatabase(): SleepNight? {
-            var night = database.getTonight()
-            if(night?.endTimeMilli != night?.startTimeMilli){
-                night = null
-            }
-            return night
+        var night = database.getTonight()
+        if (night?.endTimeMilli != night?.startTimeMilli) {
+            night = null
+        }
+        return night
     }
 
-    fun onStartTracking(){
+    fun onStartTracking() {
         /**
          * pattern: we launch the coroutine on the main or ui thread bc the result affects the
          * ui. inside, we call a suspend function so that we dont block the ui thread while waiting
@@ -139,8 +142,20 @@ class SleepTrackerViewModel(
         }
     }
 
-    private suspend fun clear(){
+    private suspend fun clear() {
         database.clear()
+    }
+
+    private val _navigateToSleepDataQuality = MutableLiveData<Long>()
+    val navigateToSleepDataQuality
+        get() = _navigateToSleepDataQuality
+
+    fun onSleepNightClicked(id: Long) {
+        _navigateToSleepDataQuality.value = id
+    }
+
+    fun onSleepDataQualityNavigated() {
+        _navigateToSleepDataQuality.value = null
     }
 }
 
