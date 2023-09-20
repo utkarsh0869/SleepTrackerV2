@@ -1,6 +1,10 @@
 # SleepTrackerV2
 Update on the [SleepTrackerV1](https://github.com/utkarsh0869/SleepTrackerV1) with the implementation of Recycler View.
 
+# Video Demo and Screenshots
+
+[![Sleep Tracker Android Application](https://i.ytimg.com/vi/xIGX3PGt4gc/maxresdefault.jpg)](https://youtu.be/xIGX3PGt4gc?si=wEfoDSLc-HOlio3t "Sleep Tracker Android Application")
+
 ![Screenshot_20230614-111735](https://github.com/utkarsh0869/SleepTrackerV2/assets/44482062/27f64c78-24c3-4224-a914-39c35eafd9d4)
 
 ![Screenshot_20230614-111751](https://github.com/utkarsh0869/SleepTrackerV2/assets/44482062/3a7dbdb8-e4eb-4b8b-b207-2c65d4e877fd)
