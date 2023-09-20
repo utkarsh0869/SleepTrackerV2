@@ -1,5 +1,5 @@
 # SleepTrackerV2
-Update on the SleepTrackerV1 with the implementation of Recycler View.
+Update on the [SleepTrackerV1](https://github.com/utkarsh0869/SleepTrackerV1) with the implementation of Recycler View.
 
 ![Screenshot_20230614-111735](https://github.com/utkarsh0869/SleepTrackerV2/assets/44482062/27f64c78-24c3-4224-a914-39c35eafd9d4)
 
